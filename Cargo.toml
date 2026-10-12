@@ -1,0 +1,39 @@
+[package]
+name = "tlv320dac3203"
+version = "0.1.0"
+edition = "2024"
+# Tested in CI (.github/workflows/ci.yml, job `msrv`).
+rust-version = "1.87"
+description = "no_std embedded-hal 1.0 driver for the TI TLV320DAC3203 stereo audio DAC with headphone amplifiers"
+license = "MIT OR Apache-2.0"
+authors = ["Manuel Schönlaub"]
+repository = "https://github.com/mschoenlaub/tlv320dac3203"
+readme = "README.md"
+keywords = ["embedded-hal-driver", "audio", "dac", "tlv320", "no-std"]
+categories = ["embedded", "no-std", "hardware-support", "multimedia::audio"]
+include = ["src/**/*.rs", "README.md", "CHANGELOG.md", "LICENSE-MIT", "LICENSE-APACHE"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[features]
+# The beep generator of processing block PRB_P25 (`beep`): a chip feature, mock-tested, that ran
+# on a chip but never made a sound there. Off by default: playback does not use it, so nothing of
+# it is built unless a caller asks.
+beep = []
+
+[dependencies]
+embedded-hal = "1.0"
+
+[dev-dependencies]
+embedded-hal-mock = { version = "0.11", default-features = false, features = ["eh1"] }
+# Self dev-dependency with `beep` on, so that a plain `cargo test` also runs the beep's mock
+# tests. Path-only dev-dependencies are dropped from the published manifest.
+tlv320dac3203 = { path = ".", features = ["beep"] }
+
+[lints.rust]
+unsafe_code = "deny"
+missing_docs = "warn"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }

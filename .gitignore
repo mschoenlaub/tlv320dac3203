@@ -1,0 +1,26 @@
+# Build output.
+/target/
+# rustfmt's backups of files it rewrote.
+**/*.rs.bk
+
+# Coverage and test tooling: LLVM profiles, cargo-llvm-cov, cargo-tarpaulin, cargo-mutants.
+*.profraw
+*.profdata
+lcov.info
+cobertura.xml
+tarpaulin-report.*
+mutants.out*/
+
+# Editors and IDEs.
+.idea/
+*.iml
+.vscode/
+.fleet/
+.zed/
+*.swp
+*.swo
+*~
+
+# Operating systems.
+.DS_Store
+Thumbs.db
